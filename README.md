@@ -118,8 +118,54 @@ terraform plan
 
 terraform apply
 ```
-***output when 3 instance created*** 
-![terraform screenshot](assets/Screenshot_20240829_155253.png)
+
+### Setup and Deployment
+**1.** **Connect to the EC2 Instance**
+
+Use the vockey.pem key to SSH into your EC2 instance:
+```bash
+ssh -i vockey.pem ec2-user@<EC2_Public_IP>
+```
+Replace <EC2_Public_IP> with the public IP address of your EC2 instance.
+
+**2.** **Authenticate Docker with Amazon ECR**
+
+Log in to Amazon ECR using the AWS CLI:
+
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+```
+Replace <AWS_ACCOUNT_ID> with your AWS account ID.
+
+**3.** **Check Docker Service***
+
+Ensure the Docker daemon is running:
+```bash
+sudo systemctl status docker
+```
+**4.** **Check ECR Repository**
+
+Verify that the Docker image exists in your ECR repository:
+```bash
+aws ecr describe-images --repository-name flaskapp-awsec2 --region us-east-1
+```
+
+**5.** **Verify the Container**
+
+Check if the container is running:
+
+```bash
+docker ps
+```
+**6.** **Accessing the App**
+
+Once the container is running, access the app via your browser:
+```bash
+http://<EC2_Public_IP>:5000
+```
+Replace <EC2_Public_IP> with the public IP address of your EC2 instance.
+
+
 
 
 
