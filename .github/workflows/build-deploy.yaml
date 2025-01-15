@@ -53,10 +53,10 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "Adding SSH private key..."
-          echo "$SSH_PRIVATE_KEY" > key.pem
-          chmod 400 key.pem
+          echo "$SSH_PRIVATE_KEY" > vockey.pem
+          chmod 400 vockey.pem
           echo "Connecting to EC2 instance..."
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@$EC2_PUBLIC_IP "
+          ssh -o StrictHostKeyChecking=no -i vockey.pem ec2-user@$EC2_PUBLIC_IP "
             echo 'Pulling Docker image...'
             docker pull ${{ steps.login-ecr.outputs.registry }}/flaskapp-awsec2:latest
             echo 'Stopping existing container...'
