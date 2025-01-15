@@ -5,6 +5,7 @@ provider "aws" {
 resource "aws_instance" "flaskapp-awsec2" {
   ami = data.aws_ami.amazon_linux.id  
   instance_type = "t2.micro"
+  key_name      = "vockey"  
   tags = {
     Name = "flaskapp-awsec2"
   }
